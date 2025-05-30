@@ -26,8 +26,8 @@ const MainLayout = ({ userType, onLogout }) => (
 
 // Router Configuration Component
 const AppRoutes = () => {
-  // Mock user state and logout function for demonstration
-  const [userType, setUserType] = React.useState(null); // null, 'cliente', 'empresa', 'admin'
+  // Mock user state - TEMPORARILY set to 'empresa' for testing Company Panel
+  const [userType, setUserType] = React.useState('empresa'); // null, 'cliente', 'empresa', 'admin'
 
   const handleLogin = (type) => {
     setUserType(type);

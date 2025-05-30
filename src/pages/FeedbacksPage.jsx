@@ -397,5 +397,35 @@ const FeedbacksPage = () => {
                     )}
                     
                     {feedback.status === 'Respondido' && (
-                      <Box sx={{ mt: 3,
-(Content truncated due to size limit. Use line ranges to read in chunks)
+                      <Box sx={{ mt: 3, p: 2, bgcolor: '#f5f5f5', borderRadius: 1 }}>
+                        <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 'bold' }}>
+                          Resposta da Empresa
+                        </Typography>
+                        <Typography variant="body2">
+                          Agradecemos seu feedback! Estamos trabalhando para melhorar nossos produtos e sua opinião é muito importante para nós. Nossa equipe está analisando os pontos levantados e em breve implementaremos melhorias.
+                        </Typography>
+                      </Box>
+                    )}
+                  </CardContent>
+                </Collapse>
+              </Card>
+            </Grid>
+          ))
+        ) : (
+          <Grid item xs={12}>
+            <Paper elevation={2} sx={{ p: 4, textAlign: 'center' }}>
+              <Typography variant="h6">
+                Nenhum feedback encontrado com os filtros selecionados.
+              </Typography>
+              <Typography variant="body1" sx={{ mt: 1 }}>
+                Tente ajustar os filtros ou limpar a busca.
+              </Typography>
+            </Paper>
+          </Grid>
+        )}
+      </Grid>
+    </Container>
+  );
+};
+
+export default FeedbacksPage;

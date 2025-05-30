@@ -1,82 +1,120 @@
 import React from 'react';
-import { Container, Typography, Box, Paper, Grid, Button } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid'; // Example for tables
-import { BarChart } from '@mui/x-charts/BarChart'; // Example for charts
+import {
+  Container,
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  Button,
+  Box,
+} from '@mui/material';
+import { BarChart } from '@mui/x-charts/BarChart';
+import { DataGrid } from '@mui/x-data-grid';
 
-// Mock data for demonstration
-const mockUsers = [
-  { id: 1, name: 'Alice Silva', email: 'alice@example.com', type: 'cliente', status: 'Ativo' },
-  { id: 2, name: 'Bob Souza', email: 'bob@example.com', type: 'cliente', status: 'Inativo' },
-  { id: 3, name: 'Empresa XYZ', email: 'contato@xyz.com', type: 'empresa', status: 'Ativo' },
+const feedbackData = {
+  meses: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+  quantidades: [5, 12, 8, 20, 15, 10],
+};
+
+const colunasUsuarios = [
+  { field: 'id', headerName: 'ID', width: 90 },
+  { field: 'nome', headerName: 'Nome', width: 150 },
+  { field: 'email', headerName: 'E-mail', width: 200 },
+  { field: 'tipo', headerName: 'Tipo', width: 130 },
 ];
 
-const userColumns = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'name', headerName: 'Nome', width: 200 },
-  { field: 'email', headerName: 'Email', width: 250 },
-  { field: 'type', headerName: 'Tipo', width: 130 },
-  { field: 'status', headerName: 'Status', width: 130 },
-  // Add actions column later (edit, delete, etc.)
+const linhasUsuarios = [
+  { id: 1, nome: 'João Silva', email: 'joao@email.com', tipo: 'Admin' },
+  { id: 2, nome: 'Maria Oliveira', email: 'maria@email.com', tipo: 'Cliente' },
 ];
 
-const mockChartData = [
-  { month: 'Jan', feedbacks: 50 },
-  { month: 'Fev', feedbacks: 75 },
-  { month: 'Mar', feedbacks: 120 },
-  { month: 'Abr', feedbacks: 90 },
-  { month: 'Mai', feedbacks: 150 },
-];
-
-const AdminPanelPage = () => {
-  // Install @mui/x-data-grid and @mui/x-charts if not already done: 
-  // npm install @mui/x-data-grid @mui/x-charts
-
+export default function AdminDashboard() {
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Typography variant="h4" component="h1" gutterBottom>
+    <Container sx={{ marginTop: 4 }}>
+      <Typography
+        variant="h4"
+        sx={{
+          fontWeight: 'bold',
+          color: '#0d3c61',
+          mb: 4,
+        }}
+      >
         Painel Administrativo
       </Typography>
 
-      <Grid container spacing={3}>
-        {/* Example Chart */}
+      <Grid container spacing={4}>
+        {/* Gráfico de Feedbacks */}
         <Grid item xs={12} md={6}>
-          <Paper sx={{ p: 2 }}>
-            <Typography variant="h6" gutterBottom>Feedbacks por Mês</Typography>
-            {/* Note: @mui/x-charts might require specific setup or installation */}
-            {/* <BarChart 
-              dataset={mockChartData}
-              xAxis={[{ scaleType: 'band', dataKey: 'month' }]}
-              series={[{ dataKey: 'feedbacks', label: 'Feedbacks' }]}
-              height={300}
-            /> */} 
-            <Typography color="text.secondary">(Placeholder para Gráfico - requer @mui/x-charts)</Typography>
-          </Paper>
+          <Card sx={{ borderRadius: 3, boxShadow: 3 }}>
+            <CardContent>
+              <Typography
+                variant="h6"
+                sx={{ mb: 2, color: '#0d3c61', fontWeight: 600 }}
+              >
+                Feedbacks por Mês
+              </Typography>
+              <BarChart
+                xAxis={[{ scaleType: 'band', data: feedbackData.meses }]}
+                series={[{ data: feedbackData.quantidades }]}
+                width={500}
+                height={300}
+              />
+            </CardContent>
+          </Card>
         </Grid>
 
-        {/* Example User Management Table */}
-        <Grid item xs={12}>
-          <Paper sx={{ p: 2 }}>
-            <Typography variant="h6" gutterBottom>Gerenciamento de Usuários</Typography>
-            <Box sx={{ height: 400, width: '100%', mt: 2 }}>
-              {/* Note: @mui/x-data-grid might require specific setup or installation */}
-              {/* <DataGrid
-                rows={mockUsers}
-                columns={userColumns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
-              /> */} 
-              <Typography color="text.secondary">(Placeholder para Tabela - requer @mui/x-data-grid)</Typography>
-            </Box>
-            <Button variant="contained" sx={{ mt: 2 }}>Adicionar Novo Usuário</Button> 
-          </Paper>
+        {/* Tabela de Usuários */}
+        <Grid item xs={12} md={6}>
+          <Card sx={{ borderRadius: 3, boxShadow: 3 }}>
+            <CardContent>
+              <Typography
+                variant="h6"
+                sx={{ mb: 2, color: '#0d3c61', fontWeight: 600 }}
+              >
+                Gerenciamento de Usuários
+              </Typography>
+              <Box
+                sx={{
+                  height: 300,
+                  borderRadius: 2,
+                  '& .MuiDataGrid-root': {
+                    border: 'none',
+                  },
+                }}
+              >
+                <DataGrid
+                  rows={linhasUsuarios}
+                  columns={colunasUsuarios}
+                  pageSize={5}
+                  rowsPerPageOptions={[5]}
+                  sx={{
+                    border: '1px solid #e0e0e0',
+                    borderRadius: 2,
+                  }}
+                />
+              </Box>
+
+              <Box mt={2} display="flex" justifyContent="flex-end">
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: '#0d3c61',
+                    '&:hover': {
+                      backgroundColor: '#094372',
+                    },
+                    borderRadius: 2,
+                    paddingX: 3,
+                    paddingY: 1,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  + Novo Usuário
+                </Button>
+              </Box>
+            </CardContent>
+          </Card>
         </Grid>
-
-        {/* Add other sections like forms, settings etc. */}
-
       </Grid>
     </Container>
   );
-};
-
-export default AdminPanelPage;
+}
